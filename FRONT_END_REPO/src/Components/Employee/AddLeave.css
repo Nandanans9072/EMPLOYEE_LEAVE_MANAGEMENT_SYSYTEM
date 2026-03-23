@@ -1,0 +1,93 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar { display: none; }
+}
+.add-leave-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px 40px;
+  font-family: "Poppins", sans-serif;
+}
+
+.add-leave-container h2 {
+  text-align: center;
+  color: #004aad;
+  font-size: 26px;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.add-leave-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-leave-form label {
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.add-leave-form input,
+.add-leave-form textarea,
+.add-leave-form select {
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 15px;
+  transition: border 0.3s ease;
+}
+
+.add-leave-form input:focus,
+.add-leave-form textarea:focus,
+.add-leave-form select:focus {
+  border-color: #004aad;
+}
+
+.add-leave-form textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.submit-btn {
+  background-color: #004aad;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #00337a;
+}
+
+/* Optional: add a slight hover and active animation */
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* 🔹 Responsive Design */
+@media (max-width: 600px) {
+  .add-leave-container {
+    padding: 20px;
+  }
+
+  .add-leave-container h2 {
+    font-size: 22px;
+  }
+}
+

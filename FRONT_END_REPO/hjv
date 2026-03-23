@@ -1,0 +1,105 @@
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams, Link, useLocation, Outlet } from 'react-router-dom'
+import './EmployeeDetail.css'
+import { FaUser, FaTachometerAlt, FaMoneyBill, FaCogs, FaClipboardList } from 'react-icons/fa'
+
+const EmployeeDetail = () => {
+  const [employee, setEmployee] = useState([])
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/employee/detail/' + id)
+      .then(result => setEmployee(result.data[0]))
+      .catch(err => console.log(err))
+  }, [id])
+
+  const handleLogout = () => {
+    axios.get('http://localhost:3000/employee/logout')
+      .then(result => {
+        if (result.data.Status) {
+          localStorage.removeItem("valid")
+          navigate('/')
+        }
+      }).catch(err => console.log(err))
+  }
+
+  // Determine active route
+  const isActive = (path) => location.pathname.includes(path)
+
+  return (
+    <div className="emp-dashboard d-flex">
+      {/* Sidebar */}
+      <div className="emp-sidebar">
+        <h4 className="text-white text-center mt-3 mb-4">Employee MS</h4>
+        <ul className="nav flex-column">
+          <li className={`nav-item ${isActive('/employee_detail') ? 'active' : ''}`}>
+            <Link to={`/employee_detail/${id}`} className="nav-link text-white">
+              <FaTachometerAlt className="me-2" /> Dashboard
+            </Link>
+          </li>
+          <li className={`nav-item ${isActive('/employee_leave') ? 'active' : ''}`}>
+            <Link to="/EmployeeDetail/leave" className="nav-link text-white">
+              <FaClipboardList className="me-2" /> Leave
+            </Link>
+          </li>
+          <li className={`nav-item ${isActive('/salary') ? 'active' : ''}`}>
+            <Link to={`/employee_salary/${id}`} className="nav-link text-white d-flex align-items-center">
+              <FaMoneyBill className="me-2" /> Salary
+            </Link>
+          </li>
+          <li className={`nav-item ${isActive('/setting') ? 'active' : ''}`}>
+            <Link to={`/employee-dashboard/setting/${id}`} className="nav-link text-white">
+              <FaCogs className="me-2" /> Setting
+            </Link>
+          </li>
+        </ul>
+      </div>
+
+      {/* Main Content */}
+      <div className="emp-main flex-grow-1">
+        {/* Topbar */}
+        <div className="emp-topbar d-flex justify-content-between align-items-center px-4">
+          <span>Welcome, <b>{employee.name}</b></span>
+          <button className="btn btn-dark btn-sm" onClick={handleLogout}>Logout</button>
+        </div>
+
+        {/* Dashboard Content */}
+        <div className="emp-content mt-4 px-4">
+          <div className="card shadow-sm p-3">
+            <div className="d-flex align-items-center">
+              <FaUser size={40} className="text-success me-3" />
+              <div>
+                <h5>Welcome Back</h5>
+                <h4 className="text-primary">{employee.name}</h4>
+              </div>
+            </div>
+          </div>
+
+          {/* Profile Section */}
+          <div className="card shadow-sm p-4 mt-4">
+            <div className="text-center">
+              <img
+                src={`http://localhost:3000/Images/${employee.image}`}
+                alt="Employee"
+                className="rounded-circle emp-photo mb-3"
+              />
+              <h5>Name: {employee.name}</h5>
+              <h6>Email: {employee.email}</h6>
+              <h6>Salary: ${employee.salary}</h6>
+            </div>
+          </div>
+
+          {/* 👇 Added Outlet Here (for nested content) */}
+          <div className="mt-4">
+            <Outlet />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default EmployeeDetail
