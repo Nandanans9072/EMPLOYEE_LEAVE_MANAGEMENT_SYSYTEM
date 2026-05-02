@@ -36,7 +36,24 @@ This starts the server with `nodemon` (script: `start`). By default the server e
 
 ## Environment & configuration
 
-- Configure your database credentials and any required secrets in the server config or environment variables used by `server_side/index.js` (check `server_side/utils/db.js`).
+- This project uses MySQL / MariaDB for its database. Configure your database credentials and any required secrets in the server environment variables or the config used by `server_side/utils/db.js`.
+
+	Example environment variables (create a `.env` in `server_side/` or set in your host):
+
+	```env
+	DB_HOST=localhost
+	DB_PORT=3306
+	DB_USER=your_db_user
+	DB_PASSWORD=your_db_password
+	DB_NAME=employee_leave_db
+	JWT_SECRET=your_jwt_secret
+	EMAIL_USER=your_email@example.com
+	EMAIL_PASS=your_email_password
+	```
+
+	- Default MySQL/MariaDB port is `3306`.
+	- Ensure the database (`DB_NAME`) exists and the configured user has appropriate privileges.
+
 - Configure mail settings in `server_side/utils/mail.js`.
 
 ## Helpful notes
